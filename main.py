@@ -21,8 +21,6 @@ class ResearchResponse(BaseModel):
 
 
 parser = PydanticOutputParser(pydantic_object=ResearchResponse)
-format_instructions = parser.get_format_instructions()
-
 
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -37,7 +35,7 @@ prompt = ChatPromptTemplate.from_messages(
         ("human", "{query}"),
         ("placeholder", "{agent_scratchpad}"),
     ]
-).partial(format_instructions=format_instructions)
+).partial(format_instructions=parser.get_format_instructions())
 
 
 llm = ChatOpenAI(
